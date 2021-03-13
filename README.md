@@ -47,7 +47,7 @@ const rumahMakan = {
 };
 ```
 
-### Mengetahui cara kerja `rest`
+### Mengetahui Perilaku `rest`
 
 #### Penerapan pada arrays
 
@@ -71,4 +71,77 @@ console.log(akhirPekan)// kam, sab
 
 ```
 
-> Jika kita lihat objek kita, disana pada property `jamBuka` secara berurutan ada `kam`, `jum`, `sab` dan pada contoh diatas kita mengambil nilai `sab` yang berposisi di tengah tapi kali ini `kam` **diikutsertakan** dengan `sab` yang keduanya dianggap sebagai sisa.
+> Jika kita lihat objek kita, disana pada property `jamBuka` secara berurutan ada `kam`, `jum`, `sab` dan pada contoh diatas kita mengambil nilai `jum` yang berposisi di tengah tapi kali ini `kam` **diikutsertakan** dengan `sab` yang keduanya dianggap sebagai sisa.
+
+## Penerapan rest pada function
+
+```javascript
+const angka = function (...angka) {
+  console.log(angka);
+};
+angka(1, 2);
+angka(1, 2, 3);
+angka(1, 2, 3, 4);
+```
+
+### Tanpa (`...`)
+
+```javascript
+const angka = function (a) {
+  console.log(a); // 1
+  angka(1, 2, 3);
+};
+```
+
+> Function ini akan mengembalikan hanya satu nilai saja walaupun diberikan banyak argumen karena function ini hanya memiliki 1 parameter saja yaitu `a`. Jadi yang hanya terbaca adalah 1
+
+### Menggunakan rest parameter (`...`)
+
+```javascript
+const angka = function (...a) {
+  console.log(...a);
+};
+angka(1, 2, 3); // 1,2,3
+```
+
+> Inilah fungsi dari spread operator, yaitu untuk mengurai/mengeluarkan data yang ada pada `array` kemudian mengirimkanya ke function `angka` diatas melalui parameter `...a`
+
+```javascript
+const t = [8, 3, 4];
+angka(...t);
+angka(1, 2, 3);
+```
+
+> `function` ini akan mengembalikan nilai yang dikirimkan oleh argumen kemudian diurai
+
+### Penerapan lebih dalam
+
+```javascript
+const angka = function (...jmlAngka) {
+  let jml = 0;
+  for (let i = 0; i < jmlAngka.length; i++) jml += jmlAngka[i];
+  console.log(jml);
+};
+angka(1, 2, 3); // 6
+```
+
+> Penggunaan rest parameters menggunakan looping untuk menjumlahkan nilai pada array
+
+### Contoh kasus
+
+Kita akan menggunakan objek yang sering kita pakai sebagai contoh kasus yaitu `rumahMakan`. dan kita akan membuat function untuk membuat menu baru, Katakanlah mie rebus dengan komposisi sebagai berikut
+
+```javascript
+mieRebus = function (sawi, bumbuLain) {
+  console.log(sawi);
+  console.log(...bumbuLain);
+};
+```
+
+Hasilnya
+
+```javascript
+rumahMakan.mieRebus("sawi", "daun bawang", "sledri", "kobis", "telur"); // sawi // daun bawang sledri kobis telur
+```
+
+> sawi **_dan_** daun bawang, sledri, kobis, telur merupakan 2 arrays yang terpisah
